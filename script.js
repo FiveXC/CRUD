@@ -61,7 +61,6 @@ else if(inptHidden.value){
 }
 /*Esse else if verifica se o valor de inptHidden é vazio se ele for ele vai redirecionar para a função salvando()*/ 
 else if(!inptHidden.value){ 
-   spanNome.innerHTML = ``
    salvando(event)
 
 }
