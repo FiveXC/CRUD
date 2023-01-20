@@ -44,8 +44,8 @@ btnCancelar.addEventListener("click",()=>{
 //FAZENDO A VALIDAÇÃO===============================================================
 btnCadastrar.addEventListener("click", validando)
 
-function validando(event){
-event.preventDefault()
+function validando(e){
+e.preventDefault()
 
 /*Essa é uma função de validação, o if verifica se alguns dos campos estão vazios, para rodar o if tudo
 que está dentro do () tem q ser verdadeiro como o vazio é falso com o !(not) transformamos ele em verdadeiro
@@ -61,7 +61,7 @@ else if(inptHidden.value){
 }
 /*Esse else if verifica se o valor de inptHidden é vazio se ele for ele vai redirecionar para a função salvando()*/ 
 else if(!inptHidden.value){ 
-   salvando(event)
+   salvando(e)
 
 }
 }
@@ -79,8 +79,8 @@ variavel chamada dados que vai armazenar um objeto com todos os valores dos inpt
 de itens armazenados dentro de pegandoChave +1 ou seja se pegandoChave tem zero itens, o primeiro item vai receber o
 nmrind = 1 se pegandoChave tem 1 item o segundo item vai receber o nmrind = 2, depois de criar a variavel a função vai
 botar essa variavel com os dados dentro de pegandoChave usando o ".push" e depois vai redirecionar para a função criandoDom()*/ 
-function salvando(event){
-event.preventDefault()
+function salvando(e){
+e.preventDefault()
 
 let dados = {
   nmrind: pegandoChave.length + 1,
