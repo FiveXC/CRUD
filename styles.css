@@ -57,13 +57,20 @@ font-weight: 600;
 border: 1px solid black;
 border-radius: 1rem;
 }
-.span,.spanMaiorDeIdade,.spanPreencherEmail,.idadeLimite{
+.span{
 display: none;
 position: absolute;
 left: 0;
 top: 2rem;
 font-size: 0.8rem;
 color:red;
+}
+.span2{
+position: absolute;
+left: 0;
+top: 2rem;
+font-size: 0.8rem;
+color:red; 
 }
 .btnEditar{
 background-color: transparent;
@@ -103,7 +110,7 @@ padding: 1rem;
 transition: 0.5s;
 }
 form.aparecer{
-transform: translateY(480px);
+transform: translateY(550px);
 transition: 0.5s;
 }
 .btnEditar,.btnExcluir{
@@ -155,13 +162,18 @@ transition: 0.5s;
 }
 form.aparecer{
 transition: 0.5s;
-top: 120%;
+top: 50%;
 }
 .btnEditar,.btnExcluir{
 font-size: 0.7rem;
 } 
 }
-            
+@media (max-height:300px){
+form.aparecer{
+transition: 0.5s;
+top: 120%;
+}
+}      
 /*NOTEBOOKS*/
 @media (min-width: 992px) and (max-width: 1199.98px) {
 .custom-table{
