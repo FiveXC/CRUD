@@ -2,171 +2,197 @@
 //IMPORTANDO TUDO PRO JS============================================================
 let mostrarDom = document.querySelector(".mostrarDom")
 let btnRegistro = document.querySelector(".btnRegistro")
-let AreaCadastro = document.querySelector(".AreaCadastro")
-let btnX = document.querySelector(".btnX")
-let Preencha = document.querySelector(".Preencha")
-let inptNome = document.querySelector(".inptNome")
-let inptProf = document.querySelector(".inptProf")
-let inptEmail = document.querySelector(".inptEmail")
-let inptCidade = document.querySelector(".inptCidade")
+let form  = document.querySelector(".form")
+let input = document.querySelectorAll(".input")
 let btnCadastrar = document.querySelector(".btnCadastrar")
-let btnCancelar = document.querySelector(".btnCancelar")
-let inptHidden  = document.querySelector(".inptHidden")
+let areasInputs = document.querySelectorAll(".areasInputs")
+let span = document.querySelectorAll(".span")
+let spanMaiorDeIdade = document.querySelector(".spanMaiorDeIdade")
+let spanPreencherEmail = document.querySelector(".spanPreencherEmail")
+let inputHidden = document.querySelector(".inputVazio")
+let emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 //IMPORTANDO TUDO PRO JS============================================================
 
-//EVENTOS CSS=======================================================================
-btnRegistro.addEventListener("click",()=>{
-   AreaCadastro.classList.toggle("aparecer")
-   inptHidden.value = ``
-   inptNome.value = ``
-   inptProf.value = ``
-   inptEmail.value = ``
-   inptCidade.value = ``
+btnRegistro.addEventListener('click', ()=>{
+   resetandoInputs()
+   form.classList.toggle("aparecer")
 })
-btnX.addEventListener("click",()=>{
-   AreaCadastro.classList.toggle("aparecer")
-   inptHidden.value = ``
-   inptNome.value = ``
-   inptProf.value = ``
-   inptEmail.value = ``
-   inptCidade.value = ``
+
+function resetandoInputs(){
+ input[0].value = ""
+ input[1].value = ""
+ input[2].value = ""
+ inputHidden.value = ""
+ resolvido(0)
+ resolvido(1)
+ resolvido(2)
+ spanMaiorDeIdade.style.display = "none"
+ spanPreencherEmail.style.display = "none"
+}
+btnCadastrar.addEventListener('click', (e)=>{
+
+e.preventDefault();
+
+   if(!input[0].value || !input[1].value ||  !input[2].value){
+      nomeVazio()
+      idadeVazio()
+      emailVazio()
+   }
+   else if(input[1].value  < 18 || input[1].value.length > 3){
+      idadeVazio()
+   }
+   else if(!inputHidden.value){
+      salvando()
+    }
+    else if(inputHidden.value){
+      editando()
+    }
+
+
 })
-btnCancelar.addEventListener("click",()=>{
-   AreaCadastro.classList.toggle("aparecer")
-   inptHidden.value = ``
-   inptNome.value = ``
-   inptProf.value = ``
-   inptEmail.value = ``
-   inptCidade.value = ``
-})
-//EVENTOS CSS=======================================================================
 
-//FAZENDO A VALIDAÇÃO===============================================================
-btnCadastrar.addEventListener("click", validando)
-
-function validando(e){
-e.preventDefault()
-
-/*Essa é uma função de validação, o if verifica se alguns dos campos estão vazios, para rodar o if tudo
-que está dentro do () tem q ser verdadeiro como o vazio é falso com o !(not) transformamos ele em verdadeiro
-assim o if consegue rodar sem problemas*/
-if(!inptNome.value|| !inptProf.value || !inptEmail.value || !inptCidade.value ){
-
-Preencha.innerHTML = `Preencha os campos`
-}
-/*Esse else if verifica se o valor de inptHidden está preechido se ele estiver o else if
-redireciona para a function editando */ 
-else if(inptHidden.value){
-   editando()
-}
-/*Esse else if verifica se o valor de inptHidden é vazio se ele for ele vai redirecionar para a função salvando()*/ 
-else if(!inptHidden.value){ 
-   salvando(e)
-
-}
-}
-//FAZENDO A VALIDAÇÃO===============================================================
-
-//SALVANDO LOCALSTORAGE=============================================================
-
-/*Aqui estamos criando uma variavel e colocando dentro dela a "__Chave__" essa chave contém os dados
-estamos pegando essa chave como o "getItem" e transformando ela em array com JSON.parse mas como essa chave
-ainda não existe o primeiro dados é salvo no  []*/ 
-let pegandoChave = JSON.parse(localStorage.getItem("__Chave__")) || []
-
-/*Essa a primeira parte dessa função usa o event.preventDefault() para o form não atualizar, depois cria uma 
-variavel chamada dados que vai armazenar um objeto com todos os valores dos inptus e com o nmrind que é a quantidade
-de itens armazenados dentro de pegandoChave +1 ou seja se pegandoChave tem zero itens, o primeiro item vai receber o
-nmrind = 1 se pegandoChave tem 1 item o segundo item vai receber o nmrind = 2, depois de criar a variavel a função vai
-botar essa variavel com os dados dentro de pegandoChave usando o ".push" e depois vai redirecionar para a função criandoDom()*/ 
-function salvando(e){
-e.preventDefault()
-
-let dados = {
-  nmrind: pegandoChave.length + 1,
-  Nome: inptNome.value,
-  Profissão: inptNome.value,
-  Email: inptEmail.value,
-  Cidade: inptCidade.value,
+console.log(inputHidden.value)
+function nomeVazio(){
+   if(!input[0].value){
+      erro(0)
+   }
+   else{
+      resolvido(0)
+   }
 }
 
-pegandoChave.push(dados)
-criandoDom()
-AreaCadastro.classList.toggle("aparecer")
+function idadeVazio(){
+  
+   if(input[1].value.length > 3  ){
+      input[1].value =  input[1].value.slice(0,3);
+   }
+   if( input[1].value > 115){
+      input[1].value =  input[1].value.slice(0,2);
+   }
+   
+   
+   if(!input[1].value){
+      erro(1)
+   }
+   else{
+   resolvido(1)
+   }  
+   
+  if(input[1].value >= 1 && input[1].value  < 18 ){
+
+   spanMaiorDeIdade.style.display = "block"
+   areasInputs[1].style.border = "1px solid red"
+
+   }
+   else{
+      spanMaiorDeIdade.style.display = "none"
+   }
 
 }
-//SALVANDO LOCALSTORAGE=============================================================
 
-//EDITANDO==========================================================================
+function emailVazio(){
 
-/*Essa função editando() usa o forEach para varrer todos os dados que estão dentro de pegandoChave
-e com o if vai perguntar se o infosPessoais.nmrind do localstorage é igual ao valor de inptHidden.value
-e ele é,pois quando clicamos no botão de editar ele recebe o valor do nmrind do localstorage, quando
-o if ver que os valores são iguais ele vai trocar os valores que já estão salvos pelos valores novos
-redirecionando pra criandoDom(), afinal em criandoDom()está o código que seta as infos ou sejá atualizando
-o localstorage*/ 
+if(!emailRegex.test(input[2].value)){
+   erro(2)  
+}else{
+   resolvido(2)     
+}
+
+if(!input[2].value){
+span[2].style.display = "none"
+spanPreencherEmail.style.display = "block"
+}
+else{
+   spanPreencherEmail.style.display = "none"
+}
+
+}
+function erro(index){
+   areasInputs[index].style.border = "1px solid red"
+   span[index].style.display = "block"
+
+}
+
+
+function resolvido(index){
+   areasInputs[index].style.border = ""
+   span[index].style.display = ""
+}
+
 
 function editando(){
 
 pegandoChave.forEach(function(infosPessoais){
-
-if(infosPessoais.nmrind == inptHidden.value){
-infosPessoais.Nome = inptNome.value
-infosPessoais.Profissão = inptProf.value
-infosPessoais.Email = inptEmail.value
-infosPessoais.Cidade = inptCidade.value
+   console.log(inputHidden.value)
+if(infosPessoais.ID == inputHidden.value){
+   infosPessoais.nome = input[0].value
+   infosPessoais.idade = input[1].value
+   infosPessoais.email = input[2].value
 }
-}
-)
 criandoDom()
-AreaCadastro.classList.toggle("aparecer")
+form.classList.toggle("aparecer")
+resetandoInputs()
+})}   
+
+
+let pegandoChave = JSON.parse(localStorage.getItem("chave")) || []
+ 
+function salvando(){
+console.log("ola")
+let dados = {
+
+   ID: pegandoChave.length + 1,
+   nome: input[0].value,
+   idade: input[1].value,
+   email: input[2].value,
 }
-  
-      
 
-//EDITANDO==========================================================================
+let entrarNoLocal =  false
 
-//CRIANDO DOM=======================================================================
+for(let i = 0; i < pegandoChave.length; i++){
+   if(pegandoChave[i].email === input[2].value ){
+      alert("Esse Email já foi salvo")
+      entrarNoLocal =  true
+   }
+}
 
-/*Essa função primeiramente cria a "__Chave__" usando o "setItem" e coloca dentro dessa chave o pegandoChave
-que tem os dados dentro dele mas para ele entrar ele precisa está em formato de array por isso usamos o JSON.stringify
+if(!entrarNoLocal){
+   pegandoChave.push(dados)
+   criandoDom()
+   resetandoInputs()
+   form.classList.toggle("aparecer")
+}
 
-"mostrarDom.innerHTML = `` "  Aqui estamos ocultando todos os outros dados para quando vc preencher o cadastro e cliclar em salvar
-só aparecer aquele que vc acabou de cadastrar, e não os outros dados que já foram cadastrados
-*/
+}
 
 function criandoDom(){
-   localStorage.setItem("__Chave__", JSON.stringify(pegandoChave))
-   mostrarDom.innerHTML = ``
-  
-   /*Aqui estamos criando o Dom, com forEach estamos varrendo todos os itens(array) dentro de pegandoChave e chamando
-   itens atraves do nome dele EX: `${infos.Nome}` assim poderemos exibir os dados que estão no localstorage 
-   no frontend*/ 
+
+   mostrarDom.innerHTML = ""
+   localStorage.setItem("chave", JSON.stringify(pegandoChave))
+
    pegandoChave.forEach(function(infos){
 
       let trDom = document.createElement("tr");
       trDom.setAttribute("scope", "col")
+      trDom.classList.add("trDom")
       mostrarDom.appendChild(trDom)
 
      let tdnmrInd = document.createElement("td")
-     tdnmrInd.innerHTML = `${infos.nmrind}`
-     trDom.appendChild(tdnmrInd )
+     tdnmrInd.innerHTML = `${infos.ID}`
+     trDom.appendChild(tdnmrInd)
 
      let tdNome = document.createElement("td")
-     tdNome.innerHTML = `${infos.Nome}`
+     tdNome.innerHTML = `${infos.nome}`
      trDom.appendChild(tdNome)
 
-     let tdprof = document.createElement("td")
-     tdprof.innerHTML = `${infos.Profissão}`
-     trDom.appendChild(tdprof)
+     let tdsenha = document.createElement("td")
+     tdsenha.innerHTML = `${infos.idade}`
+     trDom.appendChild(tdsenha)
 
      let tdEmail= document.createElement("td")
-     tdEmail.innerHTML = `${infos.Email}`
+     tdEmail.innerHTML = `${infos.email}`
      trDom.appendChild(tdEmail)
 
-     let tdCidade = document.createElement("td")
-     tdCidade.innerHTML = `${infos.Cidade}`
-     trDom.appendChild(tdCidade)
 
      let tdBtnEditar = document.createElement("td")
      trDom.appendChild(tdBtnEditar)
@@ -179,19 +205,15 @@ function criandoDom(){
      btnEditar.classList.add("btnEditar")
      tdBtnEditar.appendChild(btnEditar)
 
-     /*Aqui estamos dizendo que ao clicar no botão de editar ele vai varrer todos os itens(array) que
-     estão dentro de pegandoChave com for e vai ver se o nmrind do item que a gente acabou de clicar é igual
-     a algum nmrind que tem no localstorage,se for ele vai botar os itens(array) que já estão salvos no localstorage
-     dentro dos campos de input*/ 
      btnEditar.onclick = ()=>{
-     AreaCadastro.classList.toggle("aparecer")
-      for(let i=0; i<pegandoChave.length; i++){
-         if(pegandoChave[i].nmrind == infos.nmrind){
-            inptHidden.value = infos.nmrind
-            inptNome.value = infos.Nome
-            inptProf.value = infos.Profissão
-            inptEmail.value = infos.Email
-            inptCidade.value = infos.Cidade
+      resetandoInputs()
+     form.classList.toggle("aparecer")
+      for(let i=0; i< pegandoChave.length; i++){
+         if(pegandoChave[i].ID == infos.ID){
+            inputHidden.value = infos.ID
+            input[0].value = infos.nome
+            input[1].value = infos.idade
+            input[2].value = infos.email
          }
       } 
     }
@@ -199,14 +221,10 @@ function criandoDom(){
     btnExcluir.innerHTML = `<i class="fa-solid fa-trash"></i>`
     btnExcluir.classList.add("btnExcluir")
     tdBtnExcluir.appendChild(btnExcluir) 
-    /*Aqui estamos dizendo que ao clicar no botão de excluir ele vai varrer todos os itens(array) que
-     estão dentro de pegandoChave com for e vai ver se o nmrind do item que a gente acabou de clicar é igual
-     a algum nmrind que tem no localstorage,se for ele vai excluir esse item(array) usando o splice e depois
-     vai seta isso redirecionando para o criandoDom que vai atualizar e não vai ter mais esse item(array)
-    */
+
     btnExcluir.onclick = ()=>{
       for(let i=0; i < pegandoChave.length; i++){
-         if(pegandoChave[i].nmrind == infos.nmrind){
+         if(pegandoChave[i].ID == infos.ID){
             pegandoChave.splice(i, 1)
          }
       }
@@ -215,12 +233,6 @@ function criandoDom(){
    })
 }
 criandoDom()
-/*Aqui a gente ta dizendo que ao iniciar o site rode o criandoDom() ou seja
-quando vc iniciar o site ou da f5 ele vai criar o Dom varrer o pegandoChave com forEach e
-exibir esse dados do localstorage para o usúario ver*/
-
-//CRIANDO DOM=======================================================================
-
 
 /*<tr scope = "col">
    <td>${infos.nmrInd}</td>
@@ -231,9 +243,3 @@ exibir esse dados do localstorage para o usúario ver*/
    <td><button class = "bntEditar">`<i class="fa-solid fa-pen-to-square"></i>`</button></td>
    <td><button class = "bntExcluir">`<i class="fa-solid fa-trash"></i>`</button></td>
    </tr>*/ 
-
-
-
-
-
-
