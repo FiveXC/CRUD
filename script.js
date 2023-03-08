@@ -7,8 +7,7 @@ let input = document.querySelectorAll(".input")
 let btnCadastrar = document.querySelector(".btnCadastrar")
 let areasInputs = document.querySelectorAll(".areasInputs")
 let span = document.querySelectorAll(".span")
-let spanMaiorDeIdade = document.querySelector(".spanMaiorDeIdade")
-let spanPreencherEmail = document.querySelector(".spanPreencherEmail")
+let span2 = document.querySelectorAll(".span2")
 let inputHidden = document.querySelector(".inputVazio")
 let emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 //IMPORTANDO TUDO PRO JS============================================================
@@ -26,8 +25,7 @@ function resetandoInputs(){
  resolvido(0)
  resolvido(1)
  resolvido(2)
- spanMaiorDeIdade.style.display = "none"
- spanPreencherEmail.style.display = "none"
+
 }
 btnCadastrar.addEventListener('click', (e)=>{
 
@@ -51,7 +49,6 @@ e.preventDefault();
 
 })
 
-console.log(inputHidden.value)
 function nomeVazio(){
    if(!input[0].value){
       erro(0)
@@ -80,12 +77,11 @@ function idadeVazio(){
    
   if(input[1].value >= 1 && input[1].value  < 18 ){
 
-   spanMaiorDeIdade.style.display = "block"
    areasInputs[1].style.border = "1px solid red"
-
+   span2[0].innerHTML = `Você precisa ser maior de idade`
    }
    else{
-      spanMaiorDeIdade.style.display = "none"
+      span2[0].innerHTML = ``
    }
 
 }
@@ -99,11 +95,11 @@ if(!emailRegex.test(input[2].value)){
 }
 
 if(!input[2].value){
-span[2].style.display = "none"
-spanPreencherEmail.style.display = "block"
+   span[2].style.display = "none"
+   span2[1].innerHTML = `Preencha este campo`
 }
 else{
-   spanPreencherEmail.style.display = "none"
+   span2[1].innerHTML = ``
 }
 
 }
@@ -138,7 +134,6 @@ resetandoInputs()
 let pegandoChave = JSON.parse(localStorage.getItem("chave")) || []
  
 function salvando(){
-console.log("ola")
 let dados = {
 
    ID: pegandoChave.length + 1,
