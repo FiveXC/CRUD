@@ -13,53 +13,54 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h3 class = "titulo">Area de Cadastro</h3>
-        </header>
-        
-        <main>
-        
-        <button type = "submit" class = "btnRegistro">Clique para fazer o registro</button>
-        
-        <table class="table">
+    <main>
+<input type = "hidden" style="display: none;" class = "inputVazio"/>
+    <button type = "submit" class = "btnRegistro">Clique para salvar suas infos</button>
+
+<table class="table custom-table" >
         <thead>
-        <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Profissão</th>
-        <th scope="col">Email</th>
-        <th scope="col">Cidade</th>
-        </tr>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Idade</th>
+            <th scope="col">Email</th>
+          </tr>
         </thead>
         <tbody class = "mostrarDom">
+    
         </tbody>
-        </table>
-        
-        <div  class = "AreaCadastro">
-        <input type = "hidden" class = "inptHidden"/>
-        <div class = "areaNovoCliente">
-        <h3 class = "NovoCliente">Novo Cliente</h3>
-        <button class = "btnX" >X</button>
-        </div>
-        
-        <p class = " Preencha"></p>
-        <form id = "salvar">
-        <div class = "areaNomeSenha">
-        <input type = "text" class = "inptNome" placeholder="Digite seu nome" required/>
-        <input type = "email" class = "inptEmail" placeholder="Digite seu email"required />
+</table>
 
-        </div>
-        <div class = "areaEmailCidade">
-        <input type = "text" class = "inptProf" placeholder="Digite sua profissão"required/>
-        <input type = "text" class = "inptCidade" placeholder="Digite sua cidade"required/>    
-        </div>
-        
-        <button type = "submit" class = "btnCadastrar">Cadastrar</button>
-        </form>
-        <button type = "submit" class = "btnCancelar">Cancelar</button>
-        </div>
-        </main>
-        
+
+<form class = "form">
+
+
+  <h4>Salve suas infos aqui</h4>
+
+
+
+<div class = "areaNome areasInputs">
+<input type = "text" class = "input" placeholder = "Digite seu nome" oninput="nomeVazio()"/>
+<span class = "span">Preencha Este campo</span>
+</div>
+
+<div class = "areaIdade areasInputs">
+<input type = "number" class = "input" placeholder = "Digite sua idade"  oninput="idadeVazio()"/>
+<span class = "span">Preencha Este campo</span> 
+<span class = "spanMaiorDeIdade">Você precisa ser maior de idade</span> 
+</div>
+
+<div class = "areaEmail areasInputs">
+<input type = "email" class = "input" placeholder = "Digite seu email" oninput="emailVazio()"/>
+<span class = "span">Email não valido</span> 
+<span class = "spanPreencherEmail">Preencha este campo</span> 
+</div>
+
+<button type = "submit" class = "btnCadastrar">Salvar</button>
+</form>
+
+
+</main>
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
