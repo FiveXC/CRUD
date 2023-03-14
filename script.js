@@ -126,9 +126,9 @@ function editando(){
 pegandoChave.forEach(function(infosPessoais){
    console.log(inputHidden.value)
 if(infosPessoais.ID == inputHidden.value){
-   infosPessoais.nome = input[0].value
-   infosPessoais.idade = input[1].value
-   infosPessoais.email = input[2].value
+   infosPessoais.nome = input[0].value.toLowerCase()
+   infosPessoais.idade = input[1].value.toLowerCase()
+   infosPessoais.email = input[2].value.toLowerCase()
 }
 
 if(inputFiltro){
