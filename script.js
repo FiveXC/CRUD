@@ -257,7 +257,7 @@ function filtro(){
          
    //Includes verifica inputFiltro.value se existe dentro de item.nome caracter por caracter
    // Trim remove os espaços do inicio e do final ou seja o espaço entre 2 palavras não são removidos
-return item.nome.includes(inputFiltro.value.trim())
+return item.nome.includes(inputFiltro.value.toLowerCase().trim())
    })
    
       novopegandochave.forEach(function(infos){
@@ -307,7 +307,6 @@ return item.nome.includes(inputFiltro.value.trim())
                input[2].value = infos.email
             }
          }
-         localStorage.setItem("chave", JSON.stringify(pegandoChave))
          inputFiltro.value = ""
        }
 
@@ -328,13 +327,3 @@ return item.nome.includes(inputFiltro.value.trim())
       })
 } 
 }
-
-/*<tr scope = "col">
-   <td>${infos.nmrInd}</td>
-   <td>${infos.Nome}</td>
-   <td>${infos.Senha}</td>
-   <td>${infos.Email}</td>
-   <td>${infos.Cidade}</td>
-   <td><button class = "bntEditar">`<i class="fa-solid fa-pen-to-square"></i>`</button></td>
-   <td><button class = "bntExcluir">`<i class="fa-solid fa-trash"></i>`</button></td>
-   </tr>*/ 
