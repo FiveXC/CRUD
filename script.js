@@ -9,6 +9,7 @@ let areasInputs = document.querySelectorAll(".areasInputs")
 let span = document.querySelectorAll(".span")
 let span2 = document.querySelectorAll(".span2")
 let inputHidden = document.querySelector(".inputVazio")
+let inputFiltro = document.querySelector(".inputFiltro")
 let emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 //IMPORTANDO TUDO PRO JS============================================================
 
@@ -40,12 +41,16 @@ e.preventDefault();
       idadeVazio()
    }
    else if(!inputHidden.value){
+  
       salvando()
+      
     }
-    else if(inputHidden.value){
+   else if(inputHidden.value){
       editando()
+      form.classList.toggle("aparecer")
     }
 
+ 
 
 })
 
@@ -125,37 +130,46 @@ if(infosPessoais.ID == inputHidden.value){
    infosPessoais.idade = input[1].value
    infosPessoais.email = input[2].value
 }
-criandoDom()
-form.classList.toggle("aparecer")
-resetandoInputs()
+
+if(inputFiltro){
+   filtro()
+}
+else{
+   criandoDom()
+   form.classList.toggle("aparecer")
+   resetandoInputs()
+}
+
 })}   
 
 
 let pegandoChave = JSON.parse(localStorage.getItem("chave")) || []
  
 function salvando(){
+
 let dados = {
 
    ID: pegandoChave.length + 1,
-   nome: input[0].value,
-   idade: input[1].value,
-   email: input[2].value,
+   nome: input[0].value.toLowerCase(),
+   idade: input[1].value.toLowerCase(),
+   email: input[2].value.toLowerCase(),
 }
 
-let entrarNoLocal =  false
-
+let registrar = false
 for(let i = 0; i < pegandoChave.length; i++){
    if(pegandoChave[i].email === input[2].value ){
       alert("Esse Email já foi salvo")
-      entrarNoLocal =  true
+       registrar = true
    }
 }
 
-if(!entrarNoLocal){
-   pegandoChave.push(dados)
-   criandoDom()
-   resetandoInputs()
-   form.classList.toggle("aparecer")
+if(!registrar){
+
+      pegandoChave.push(dados)
+      criandoDom()
+      resetandoInputs()
+      form.classList.toggle("aparecer")
+  
 }
 
 }
@@ -211,6 +225,7 @@ function criandoDom(){
             input[2].value = infos.email
          }
       } 
+      criandoDom()
     }
     let btnExcluir = document.createElement("button")
     btnExcluir.innerHTML = `<i class="fa-solid fa-trash"></i>`
@@ -228,6 +243,91 @@ function criandoDom(){
    })
 }
 criandoDom()
+
+
+function filtro(){
+ 
+   if(!inputFiltro.value){
+      criandoDom()
+   }
+
+  else {
+      let novopegandochave = pegandoChave.filter(function(item){
+         mostrarDom.innerHTML = ""
+         
+   //Includes verifica inputFiltro.value se existe dentro de item.nome caracter por caracter
+   // Trim remove os espaços do inicio e do final ou seja o espaço entre 2 palavras não são removidos
+return item.nome.includes(inputFiltro.value.trim())
+   })
+   
+      novopegandochave.forEach(function(infos){
+  
+
+         let trDom = document.createElement("tr");
+         trDom.setAttribute("scope", "col")
+         trDom.classList.add("trDom")
+         mostrarDom.appendChild(trDom)
+   
+        let tdnmrInd = document.createElement("td")
+        tdnmrInd.innerHTML = `${infos.ID}`
+        trDom.appendChild(tdnmrInd)
+   
+        let tdNome = document.createElement("td")
+        tdNome.innerHTML = `${infos.nome}`
+        trDom.appendChild(tdNome)
+   
+        let tdsenha = document.createElement("td")
+        tdsenha.innerHTML = `${infos.idade}`
+        trDom.appendChild(tdsenha)
+   
+        let tdEmail= document.createElement("td")
+        tdEmail.innerHTML = `${infos.email}`
+        trDom.appendChild(tdEmail)
+   
+   
+        let tdBtnEditar = document.createElement("td")
+        trDom.appendChild(tdBtnEditar)
+   
+        let tdBtnExcluir = document.createElement("td")
+        trDom.appendChild(tdBtnExcluir)
+   
+        let btnEditar = document.createElement("button")
+        btnEditar.innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`
+        btnEditar.classList.add("btnEditar")
+        tdBtnEditar.appendChild(btnEditar)
+   
+        btnEditar.onclick = ()=>{
+         resetandoInputs()
+        form.classList.toggle("aparecer")
+         for(let i=0; i< pegandoChave.length; i++){
+            if(pegandoChave[i].ID == infos.ID){
+               inputHidden.value = infos.ID
+               input[0].value = infos.nome
+               input[1].value = infos.idade
+               input[2].value = infos.email
+            }
+         }
+         localStorage.setItem("chave", JSON.stringify(pegandoChave))
+         inputFiltro.value = ""
+       }
+
+       let btnExcluir = document.createElement("button")
+       btnExcluir.innerHTML = `<i class="fa-solid fa-trash"></i>`
+       btnExcluir.classList.add("btnExcluir")
+       tdBtnExcluir.appendChild(btnExcluir) 
+   
+       btnExcluir.onclick = ()=>{
+         for(let i=0; i < pegandoChave.length; i++){
+            if(pegandoChave[i].ID == infos.ID){
+               pegandoChave.splice(i, 1)
+            }
+         }
+          criandoDom() 
+         inputFiltro.value = ""
+       }
+      })
+} 
+}
 
 /*<tr scope = "col">
    <td>${infos.nmrInd}</td>
