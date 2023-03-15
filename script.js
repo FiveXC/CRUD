@@ -18,17 +18,6 @@ btnRegistro.addEventListener('click', ()=>{
    form.classList.toggle("aparecer")
 })
 
-function resetandoInputs(){
- input[0].value = ""
- input[1].value = ""
- input[2].value = ""
- inputHidden.value = ""
-
- resolvido(0)
- resolvido(1)
- resolvido(2)
-
-}
 btnCadastrar.addEventListener('click', (e)=>{
 
 e.preventDefault();
@@ -41,10 +30,9 @@ e.preventDefault();
    else if(input[1].value  < 18 || input[1].value.length > 3){
       idadeVazio()
    }
-   else if(!inputHidden.value){
-  
+   else if(!inputHidden.value){ 
       salvando()
-      
+      form.classList.toggle("aparecer")
     }
    else if(inputHidden.value){
       editando()
@@ -133,17 +121,20 @@ if(infosPessoais.ID == inputHidden.value){
 }
 
 if(inputFiltro){
-   localStorage.setItem("chave", JSON.stringify(pegandoChave))
-   criandoDom()
+   setando()
+   filtro()
 }
-else{
-   criandoDom() 
-   form.classList.toggle("aparecer")
+ else{
+   setando()
+   pegandoChaveCompleto()
    resetandoInputs()
+ }  
 
-}
 
-})}   
+
+})
+alert("Alterado com sucesso")
+}   
 
 
 let pegandoChave = JSON.parse(localStorage.getItem("chave")) || []
@@ -166,49 +157,40 @@ for(let i = 0; i < pegandoChave.length; i++){
 }
 
 if(!registrar){
-
       pegandoChave.push(dados)
-      criandoDom()
+      pegandoChaveCompleto()
       resetandoInputs()
-      form.classList.toggle("aparecer")
-  
+}
 }
 
-}
-
-function criandoDom(){
-
+function pegandoChaveCompleto(){
    mostrarDom.innerHTML = ""
-   localStorage.setItem("chave", JSON.stringify(pegandoChave))
-
+   setando()
    pegandoChave.forEach(function(infos){
-
       adicionandoTabelas(infos)
    })
 }
-criandoDom()
+pegandoChaveCompleto()
 
 
 function filtro(){
 
- if(!inputFiltro.value){
-      criandoDom()
+   if(!inputFiltro.value){
+      pegandoChaveCompleto()
+   }
+   else{
+    let pegandoChaveFiltrado =  pegandoChave.filter(function(todosItens){
+      mostrarDom.innerHTML = "" 
+          return todosItens.nome.includes(inputFiltro.value.toLowerCase().trim())
+      })
+
+      pegandoChaveFiltrado.forEach(function(infos){ 
+ 
+         adicionandoTabelas(infos)
+      })
    }
 
-  else {
-      let novopegandochave = pegandoChave.filter(function(item){
-         mostrarDom.innerHTML = ""
-         
-//Includes verifica inputFiltro.value se existe dentro de item.nome caracter por caracter
-// Trim remove os espaços do inicio e do final ou seja o espaço entre 2 palavras não são removidos
-return item.nome.includes(inputFiltro.value.toLowerCase().trim())
-   })
-   
-      novopegandochave.forEach(function(infos){
-         adicionandoTabelas(infos)
 
-      })
-} 
 }
 
 function adicionandoTabelas(infos){
@@ -253,6 +235,7 @@ function adicionandoTabelas(infos){
             input[2].value = infos.email
          }
       } 
+      setando()
       inputFiltro.value = ""
     }
     let btnExcluir = document.createElement("button")
@@ -266,7 +249,28 @@ function adicionandoTabelas(infos){
             pegandoChave.splice(i, 1)
          }
       }
-      criandoDom()
+      setando()
+      pegandoChaveCompleto()
+      alert("Excluido com sucesso")
       inputFiltro.value = ""
     }
 }
+
+/*FUNÇÕES AUXILIARES=========================================================*/ 
+function setando(){
+   localStorage.setItem("chave", JSON.stringify(pegandoChave))
+}
+
+
+function resetandoInputs(){
+   input[0].value = ""
+   input[1].value = ""
+   input[2].value = ""
+   inputHidden.value = ""
+   resolvido(0)
+   resolvido(1)
+   resolvido(2)
+  
+}
+
+/*FUNÇÕES AUXILIARES=========================================================*/ 
