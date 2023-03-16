@@ -228,8 +228,6 @@ function criandoTabela(infos){
           input[2].value = infos.email
        }
     } 
-    console.log(infos.nome)
-
   }
 
    let tdBtnExcluir = document.createElement("td")
