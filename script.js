@@ -275,10 +275,11 @@ function editando(){
        infosPessoais.nome = input[0].value.toLowerCase()
        infosPessoais.idade = input[1].value.toLowerCase()
        infosPessoais.email = input[2].value.toLowerCase()
+       pegandoChaveCompleto()
+       aparecendoFormZerandoInputs()
+       alert("Editado com sucesso")
     }     
     })
-    pegandoChaveCompleto()
-    aparecendoFormZerandoInputs()
-    alert("Editado com sucesso")
+
 }  
 //EDITANDO====================================
