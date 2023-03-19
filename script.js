@@ -13,6 +13,7 @@ let inputFiltro = document.querySelector(".inputFiltro")
 let emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 //IMPORTANDO TUDO PRO JS============================================================
 
+
 function aparecendoFormZerandoInputs(){
     form.classList.toggle("aparecer")
     input[0].value = ""
@@ -281,5 +282,3 @@ function editando(){
     alert("Editado com sucesso")
 }  
 //EDITANDO====================================
-
-
