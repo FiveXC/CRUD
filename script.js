@@ -18,8 +18,16 @@ function aparecendoFormZerandoInputs(){
     input[0].value = ""
     input[1].value = ""
     input[2].value = ""
-    inputHidden.value = ""
     inputFiltro.value = ""
+    inputHidden.value = ""
+    span[0].style.display = "none"
+    span[1].style.display = "none"
+    span[2].style.display = "none"
+    span2[0].innerHTML = ``
+    span2[1].innerHTML = ``
+    areasInputs[0].style.border = ""
+    areasInputs[1].style.border = ""
+    areasInputs[2].style.border = ""
 }
 
 
@@ -67,6 +75,10 @@ function nomeVazio(){
 }
 
 function idadeVazio(){
+    
+    if(input[1].value <= 0){
+        input[1].value = input[1].value.slice(0,0)
+    }
 
     if(input[1].value){
         resolvido(1)
