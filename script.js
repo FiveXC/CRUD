@@ -53,7 +53,7 @@ else if(!emailRegex.test(input[2].value)){
     emailVazio()
 }
 
-if(inputHidden.value ){
+else if(inputHidden.value){
     editando()
 }
 else{
