@@ -76,10 +76,6 @@ function nomeVazio(){
 }
 
 function idadeVazio(){
-    
-    if(input[1].value <= 0){
-        input[1].value = input[1].value.slice(0,0)
-    }
 
     if(input[1].value){
         resolvido(1)
@@ -87,15 +83,10 @@ function idadeVazio(){
     else{
         erro(1)
     } 
-
-   if(input[1].value.length > 3){
-    input[1].value = input[1].value.slice(0,3)
-   }
-   
-    if(input[1].value > 116){
-    alert("116 é a idade limite")
-    input[1].value = input[1].value.slice(0,2)
-   }
+    
+    if(input[1].value <= 0 ){
+        input[1].value = input[1].value.slice(0,0)
+    }
 
    if(input[1].value > 0 && input[1].value < 18){
     span2[0].innerHTML = "Você precisa ser maior de idade"
@@ -104,8 +95,20 @@ function idadeVazio(){
    else{
     span2[0].innerHTML = ""
    }
-}
 
+   if(input[1].value - Math.floor(input[1].value) !== 0){
+    alert("Digite um numero inteiro por favor.")
+   }
+   if(input[1].value.length > 3){
+    input[1].value = input[1].value.slice(0,3)
+   }
+ 
+   if(input[1].value > 116){
+    alert("116 é a idade limite")
+    input[1].value = input[1].value.slice(0,2)
+   }
+
+}
 
 function emailVazio(){
     if(emailRegex.test(input[2].value)){
