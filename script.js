@@ -13,6 +13,13 @@ let inputFiltro = document.querySelector(".inputFiltro")
 let emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 //IMPORTANDO TUDO PRO JS============================================================
 
+input[1].addEventListener('keydown', function(event) {
+    // permite somente números e as teclas de navegação (setas, backspace, delete)
+if (event.key !== "ArrowDown" && event.key !== "ArrowUp" && event.key !== "ArrowLeft" && event.key !== "ArrowRight" && event.key !== "Backspace" && event.key !== "Delete" && isNaN(parseInt(event.key))) {
+      event.preventDefault();
+    }
+ });
+
 
 function aparecendoFormZerandoInputs(){
     form.classList.toggle("aparecer")
@@ -47,6 +54,11 @@ if(!input[0].value || !input[1].value ||  !input[2].value){
     emailVazio()
 
 }
+else if(input[1].value == 0){
+alert("Zero não é considerado idade")
+input[1].value = input[1].value.slice(0,0)
+idadeVazio()
+}
 else if(input[1].value < 18){
     idadeVazio()
 }
@@ -77,17 +89,13 @@ function nomeVazio(){
 
 function idadeVazio(){
 
-    if(input[1].value){
+    if(input[1].value ){
         resolvido(1)
     }
     else{
         erro(1)
-    } 
-    
-    if(input[1].value <= 0 ){
-        input[1].value = input[1].value.slice(0,0)
-    }
-
+   }
+ 
    if(input[1].value > 0 && input[1].value < 18){
     span2[0].innerHTML = "Você precisa ser maior de idade"
     areasInputs[1].style.border = "1px solid red"
@@ -96,11 +104,8 @@ function idadeVazio(){
     span2[0].innerHTML = ""
    }
 
-   if(input[1].value - Math.floor(input[1].value) !== 0){
-    alert("Digite um numero inteiro por favor.")
-   }
    if(input[1].value.length > 3){
-    input[1].value = input[1].value.slice(0,3)
+        input[1].value = input[1].value.slice(0,3)
    }
  
    if(input[1].value > 116){
