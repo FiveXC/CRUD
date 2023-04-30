@@ -54,11 +54,6 @@ if(!input[0].value || !input[1].value ||  !input[2].value){
     emailVazio()
 
 }
-else if(input[1].value == 0){
-alert("Zero não é considerado idade")
-input[1].value = input[1].value.slice(0,0)
-idadeVazio()
-}
 else if(input[1].value < 18){
     idadeVazio()
 }
@@ -96,13 +91,12 @@ function idadeVazio(){
         erro(1)
    }
  
-   if(input[1].value > 0 && input[1].value < 18){
-    span2[0].innerHTML = "Você precisa ser maior de idade"
-    areasInputs[1].style.border = "1px solid red"
-   }
-   else{
-    span2[0].innerHTML = ""
-   }
+   if (input[1].value !== '' && input[1].value < 18) {
+        span2[0].innerHTML = "Você precisa ser maior de idade"
+        areasInputs[1].style.border = "1px solid red"
+    } else {
+        span2[0].innerHTML = ""
+    }
 
    if(input[1].value.length > 3){
         input[1].value = input[1].value.slice(0,3)
