@@ -105,6 +105,13 @@ function idadeVazio(){
    if(input[1].value > 116){
     alert("116 é a idade limite")
     input[1].value = input[1].value.slice(0,2)
+    if(input[1].value < 18){
+      span2[0].innerHTML = "Você precisa ser maior de idade"
+      areasInputs[1].style.border = "1px solid red"
+    }
+    else{
+      span2[0].innerHTML = ""
+    }
    }
 
 }
