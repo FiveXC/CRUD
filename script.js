@@ -13,6 +13,14 @@ let inputFiltro = document.querySelector(".inputFiltro")
 let emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 //IMPORTANDO TUDO PRO JS============================================================
 
+input[0].addEventListener('keydown', (event) => {
+  let regexLetras = /[A-Za-zÀ-ÖØ-öø-ÿ]/; // regex para letras e acentuações
+
+  if (!regexLetras.test(event.key)) {
+    event.preventDefault(); // impede a inserção do caractere
+  }
+})
+
 input[1].addEventListener('keydown', function(event) {
     // permite somente números e as teclas de navegação (setas, backspace, delete)
 if (event.key !== "ArrowDown" && event.key !== "ArrowUp" && event.key !== "ArrowLeft" && event.key !== "ArrowRight" && event.key !== "Backspace" && event.key !== "Delete" && isNaN(parseInt(event.key))) {
