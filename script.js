@@ -288,9 +288,9 @@ function editando(){
   
   }
    else if(referencia.email == inputHidden.value){
-      item.nome = input[0].value
-      item.idade = input[1].value
-      item.email = input[2].value
+      referencia.nome = input[0].value
+      referencia.idade = input[1].value
+      referencia.email = input[2].value
       localStorage.setItem("chaveValores", JSON.stringify(pegandoChave))
       todosItensDoPegandoChave()
       inputFiltro.value = ""   
