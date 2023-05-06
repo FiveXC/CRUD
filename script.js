@@ -13,213 +13,209 @@ let inputFiltro = document.querySelector(".inputFiltro")
 let emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 //IMPORTANDO TUDO PRO JS============================================================
 
+//IMPEDINDO CARACTERES EXPECIFICOS SEREM ADICIONADO=================================
 input[0].addEventListener('keydown', (event) => {
-  let regexLetras = /[A-Za-zÀ-ÖØ-öø-ÿ]/; // regex para letras e acentuações
-
-  if (!regexLetras.test(event.key)) {
-    event.preventDefault(); // impede a inserção do caractere
-  }
-})
-
-input[1].addEventListener('keydown', function(event) {
-    // permite somente números e as teclas de navegação (setas, backspace, delete)
-if (event.key !== "ArrowDown" && event.key !== "ArrowUp" && event.key !== "ArrowLeft" && event.key !== "ArrowRight" && event.key !== "Backspace" && event.key !== "Delete" && isNaN(parseInt(event.key))) {
-      event.preventDefault();
+    let regexLetras = /[A-Za-zÀ-ÖØ-öø-ÿ]/; // regex para letras e acentuações
+  
+    if (!regexLetras.test(event.key)) {
+      event.preventDefault(); // impede a inserção do caractere
     }
- });
+})
+  
+input[1].addEventListener('keydown', function(event) {
+      // permite somente números e as teclas de navegação (setas, backspace, delete)
+  if (isNaN(parseInt(event.key)) && event.key !== "ArrowDown" && event.key !== "ArrowUp" && event.key !== "ArrowLeft" && event.key !== "ArrowRight" && event.key !== "Backspace" && event.key !== "Delete" ) {
+        event.preventDefault();
+      }
+});
+//IMPEDINDO CARACTERES EXPECIFICOS SEREM ADICIONADO=================================
 
 
+//APARECENDO MODAL E ZERANDO INPUTS=================================================
 function aparecendoFormZerandoInputs(){
-    form.classList.toggle("aparecer")
-    input[0].value = ""
-    input[1].value = ""
-    input[2].value = ""
-    inputFiltro.value = ""
-    inputHidden.value = ""
-    span[0].style.display = "none"
-    span[1].style.display = "none"
-    span[2].style.display = "none"
-    span2[0].innerHTML = ``
-    span2[1].innerHTML = ``
-    areasInputs[0].style.border = ""
-    areasInputs[1].style.border = ""
-    areasInputs[2].style.border = ""
-}
+  form.classList.toggle("aparecer")
 
+  input.forEach(function(input){
+    input.value = ""
+  })
+
+  span.forEach(function(span){
+    span.style.display = "none"
+  })
+  
+  span2.forEach(function(span2){
+    span2.innerHTML = ""
+  })
+
+  areasInputs.forEach(function(area){
+    area.style.border = ""
+  })
+
+  inputHidden.value = ""
+  inputFiltro.value = ""
+
+}
 
 btnAparecerModal.addEventListener("click", ()=>{
-    aparecendoFormZerandoInputs()
+  aparecendoFormZerandoInputs()
 })
-
-//VALIDAÇÕES========================================================================
-
-btnSalvar.addEventListener("click", (e)=>{
-e.preventDefault()
-
-if(!input[0].value || !input[1].value ||  !input[2].value){
-    nomeVazio()
-    idadeVazio()
-    emailVazio()
-
-}
-else if(input[1].value < 18){
-    idadeVazio()
-}
-else if(!emailRegex.test(input[2].value)){
-    emailVazio()
-}
-
-else if(inputHidden.value){
-    editando()
-}
-else{
-    inserindoDadosNolocal()
-}
-
-})
-//VALIDAÇÕES========================================================================
+//APARECENDO MODAL E ZERANDO INPUTS=================================================
 
 //VALIDAÇÕES AO ESCREVER NO INPUT===================================================
 function nomeVazio(){
-
-    if(input[0].value){
-        resolvido(0)
-    }
-    else{
-        erro(0)
-    }
+  if(!input[0].value){
+      erro(0)
+  }
+  else{
+    resolvido(0)
+  }
 }
 
 function idadeVazio(){
 
-    if(input[1].value ){
-        resolvido(1)
-    }
-    else{
-        erro(1)
+  if(!input[1].value){
+    erro(1)
    }
- 
-   if (input[1].value !== '' && input[1].value < 18) {
-        span2[0].innerHTML = "Você precisa ser maior de idade"
-        areasInputs[1].style.border = "1px solid red"
-    } else {
-        span2[0].innerHTML = ""
-    }
+  else{
+   resolvido(1)
+  }
 
-   if(input[1].value.length > 3){
-        input[1].value = input[1].value.slice(0,3)
-   }
- 
-   if(input[1].value > 116){
-    alert("116 é a idade limite")
+  if(input[1].value.length > 3){
+    input[1].value = input[1].value.slice(0,3)
+  }
+
+  if(input[1].value > 116){
     input[1].value = input[1].value.slice(0,2)
-    if(input[1].value < 18){
-      span2[0].innerHTML = "Você precisa ser maior de idade"
-      areasInputs[1].style.border = "1px solid red"
-    }
-    else{
-      span2[0].innerHTML = ""
-    }
-   }
+    alert("A idade máxima é 116")
+  }
+  
+  if(input[1].value != "" && input[1].value < 18){
+    span2[0].innerHTML = "Você precisa ser maior de idade"
+    areasInputs[1].style.border = "1px solid red"
+  }
+  else{
+    span2[0].innerHTML = ""
+  }
 
 }
 
 function emailVazio(){
-    if(emailRegex.test(input[2].value)){
-        resolvido(2)
-    }
-    else{
-        erro(2)
-    }
+ 
+  if(!emailRegex.test(input[2].value)){
+    erro(2)
+  }
+  else{
+    resolvido(2)
+  }
+  if(!input[2].value){
+    span2[1].innerHTML = "Preencha este campo"
+    span[2].style.display = "none"
+  }
+  else{
+    span2[1].innerHTML = ""
+  }
+  
+}
 
-    if(input[2].value){
-        span2[1].innerHTML = ""
-    }
-    else{
-        span2[1].innerHTML = "Preencha este campo"
-        span[2].style.display = "none"
-    }
+
+function erro(index){
+  span[index].style.display = "block"
+  areasInputs[index].style.border = "1px solid red"
 }
 
 function resolvido(index){
-    span[index].style.display = "none"
-    areasInputs[index].style.border = ""
+  span[index].style.display = "none"
+  areasInputs[index].style.border = ""
 }
-function  erro(index){
-    span[index].style.display = "block"
-    areasInputs[index].style.border = "1px solid red"
-}
-
 //VALIDAÇÕES AO ESCREVER NO INPUT===================================================
 
+//VALIDAÇÕES========================================================================
+btnSalvar.addEventListener("click", (event)=>{
+event.preventDefault()
 
+  if(!input[0].value || !input[1].value ||  !input[2].value){
+    nomeVazio()
+    idadeVazio()
+    emailVazio()
+  }
+  else if(input[1].value < 18){
+    idadeVazio()
+  }
+  else if(!emailRegex.test(input[2].value)){
+    emailVazio()
+  }
+  else if(inputHidden.value){
+    editando()
+  }
+  else{
+    inserindoDadosNolocal()
+  }
+})
+//VALIDAÇÕES========================================================================
 
 //INSERINDO DADOS NO LOCAL==========================================================
-let pegandoChave = JSON.parse(localStorage.getItem("chave")) || []
+let pegandoChave = JSON.parse(localStorage.getItem("chaveValores")) || []
+  
 
 function inserindoDadosNolocal(){
 
-let dados = {
+  let valores = {
     nome: input[0].value.toLowerCase(),
     idade: input[1].value.toLowerCase(),
-    email: input[2].value.toLowerCase(),
-}
+    email: input[2].value.toLowerCase()
+  }
 
-let temNoLocal = false 
+let temNoLocal = false
 
 for(let i = 0; i < pegandoChave.length; i++){
-    if(pegandoChave[i].email === input[2].value){
-        alert("Esse email já está salvo")
-        temNoLocal = true 
+    if(pegandoChave[i].email == valores.email){
+        alert("Esse email já está salvo, coloque outro.") 
+        temNoLocal = true        
     }
 }
 
 if(!temNoLocal){
-    pegandoChave.push(dados)
-    pegandoChaveCompleto()
-    aparecendoFormZerandoInputs()
+  pegandoChave.push(valores)
+  localStorage.setItem("chaveValores", JSON.stringify(pegandoChave))
+  todosItensDoPegandoChave()
+  aparecendoFormZerandoInputs()
 }
 
 }
 //INSERINDO DADOS NO LOCAL==========================================================
 
 
-function pegandoChaveCompleto(){
+//EXIBINDO VALORES DOS INPUTS=======================================================
+function todosItensDoPegandoChave(){
+  mostrarDom.innerHTML = ""
 
-    mostrarDom.innerHTML = ""
-    localStorage.setItem("chave", JSON.stringify(pegandoChave))
-
-    pegandoChave.forEach(function(infos){
-        criandoTabela(infos)
-    })
+  pegandoChave.forEach(function(referencia){
+    criandoTabela(referencia)
+  })
 }
-pegandoChaveCompleto()
-
-//INSERINDO DADOS NO LOCAL==========================================================
-
-
-//FILTRO============================================================================
+todosItensDoPegandoChave()
 
 function filtro(){
-   
-    if(!inputFiltro.value){
-        pegandoChaveCompleto()
-    }
-    else{
-    let pegandoChaveFiltrado = pegandoChave.filter(function(infosFiltradas){
-        mostrarDom.innerHTML = ""
-        return infosFiltradas.nome.includes(inputFiltro.value.toLowerCase().trim())
+  
+  if(!inputFiltro){
+    todosItensDoPegandoChave()
+  }
+  else{
+    mostrarDom.innerHTML = ""
+    let itensPegandoChaveFiltrados = pegandoChave.filter(function(referencia){
+            return referencia.nome.includes(inputFiltro.value.toLowerCase().trim());
     })
     
-    pegandoChaveFiltrado.forEach(function(infos){
-        criandoTabela(infos)
+    itensPegandoChaveFiltrados.forEach(function(referencia){
+      criandoTabela(referencia)
+      
     })
-    }
+
+  }
+
 }
 
-//FILTRO============================================================================
-
-function criandoTabela(infos){
+function criandoTabela(referencia){
 
     let trDom = document.createElement("tr");
     trDom.setAttribute("scope", "col")
@@ -228,15 +224,15 @@ function criandoTabela(infos){
 
 
    let tdNome = document.createElement("td")
-   tdNome.innerHTML = `${infos.nome}`
+   tdNome.innerHTML = `${referencia.nome}`
    trDom.appendChild(tdNome)
 
    let tdsenha = document.createElement("td")
-   tdsenha.innerHTML = `${infos.idade}`
+   tdsenha.innerHTML = `${referencia.idade}`
    trDom.appendChild(tdsenha)
 
    let tdEmail= document.createElement("td")
-   tdEmail.innerHTML = `${infos.email}`
+   tdEmail.innerHTML = `${referencia.email}`
    trDom.appendChild(tdEmail)
 
 
@@ -249,15 +245,12 @@ function criandoTabela(infos){
    tdBtnEditar.appendChild(btnEditar)
 
    btnEditar.onclick = ()=>{
-   form.classList.toggle("aparecer")
-    for(let i=0; i< pegandoChave.length; i++){
-       if(pegandoChave[i].email == infos.email){
-          inputHidden.value = infos.email
-          input[0].value = infos.nome
-          input[1].value = infos.idade
-          input[2].value = infos.email
-       }
-    } 
+
+          form.classList.toggle("aparecer")
+          inputHidden.value = referencia.email
+          input[0].value = referencia.nome
+          input[1].value = referencia.idade
+          input[2].value = referencia.email 
   }
 
    let tdBtnExcluir = document.createElement("td")
@@ -271,32 +264,40 @@ function criandoTabela(infos){
     btnExcluir.onclick = ()=>{
 
       for(let i=0; i < pegandoChave.length; i++){
-         if(pegandoChave[i].email == infos.email){
-            pegandoChave.splice(i, 1)
+         if(pegandoChave[i].email == referencia.email){
+          pegandoChave.splice(i, 1)
          }
       }
-      pegandoChaveCompleto()
+      localStorage.setItem("chaveValores", JSON.stringify(pegandoChave))
+      todosItensDoPegandoChave()
       inputFiltro.value = ""
       alert("Excluido com sucesso")
     }
 }
+//EXIBINDO VALORES DOS INPUTS=======================================================
 
-
-//EDITANDO====================================
-
+//EDITANDO VALORES DOS VALORES SALVOS===============================================
 function editando(){
+  pegandoChave.forEach(function(referencia){
 
-    pegandoChave.forEach(function(infosPessoais){
-    
-    if(infosPessoais.email == inputHidden.value){
-       infosPessoais.nome = input[0].value.toLowerCase()
-       infosPessoais.idade = input[1].value.toLowerCase()
-       infosPessoais.email = input[2].value.toLowerCase()
-       pegandoChaveCompleto()
-       aparecendoFormZerandoInputs()
-       alert("Editado com sucesso")
-    }     
-    })
+  if(referencia.nome == input[0].value &&  referencia.idade == input[1].value && referencia.email == input[2].value){
+    alert("Nenhuma Alteração feita")
+    todosItensDoPegandoChave()
+    inputFiltro.value = ""   
+    form.classList.toggle("aparecer")
+  
+  }
+   else if(referencia.email == inputHidden.value){
+      item.nome = input[0].value
+      item.idade = input[1].value
+      item.email = input[2].value
+      localStorage.setItem("chaveValores", JSON.stringify(pegandoChave))
+      todosItensDoPegandoChave()
+      inputFiltro.value = ""   
+      form.classList.toggle("aparecer")
+      alert("Alteração salva")
+    }
 
-}  
-//EDITANDO====================================
+  })
+}
+//EDITANDO VALORES DOS VALORES SALVOS===============================================
