@@ -189,50 +189,49 @@ if(!temNoLocal){
 function todosItensDoPegandoChave(){
   mostrarDom.innerHTML = ""
 
-  pegandoChave.forEach(function(referencia){
-    criandoTabela(referencia)
+  pegandoChave.forEach(function(item,index){
+    criandoTabela(item, index)
   })
 }
 todosItensDoPegandoChave()
 
 function filtro(){
   
-  if(!inputFiltro){
+if(!inputFiltro){
     todosItensDoPegandoChave()
-  }
-  else{
-    mostrarDom.innerHTML = ""
-    let itensPegandoChaveFiltrados = pegandoChave.filter(function(referencia){
-            return referencia.nome.includes(inputFiltro.value.toLowerCase().trim());
-    })
-    
-    itensPegandoChaveFiltrados.forEach(function(referencia){
-      criandoTabela(referencia)
-      
-    })
-
-  }
-
 }
 
-function criandoTabela(referencia){
+else{
+     mostrarDom.innerHTML = ""
+     pegandoChave.forEach(function(item,index){
+            if(item.nome.includes(inputFiltro.value.toLowerCase().trim())){
+              criandoTabela(item,index)
+            }
+     })   
+}
+}
+
+function criandoTabela(item,index){
 
     let trDom = document.createElement("tr");
     trDom.setAttribute("scope", "col")
     trDom.classList.add("trDom")
     mostrarDom.appendChild(trDom)
 
+    let tdID = document.createElement("td")
+    tdID.innerHTML = Number(index) + 1
+    trDom.appendChild(tdID)
 
    let tdNome = document.createElement("td")
-   tdNome.innerHTML = `${referencia.nome}`
+   tdNome.innerHTML = `${item.nome}`
    trDom.appendChild(tdNome)
 
    let tdsenha = document.createElement("td")
-   tdsenha.innerHTML = `${referencia.idade}`
+   tdsenha.innerHTML = `${item.idade}`
    trDom.appendChild(tdsenha)
 
    let tdEmail= document.createElement("td")
-   tdEmail.innerHTML = `${referencia.email}`
+   tdEmail.innerHTML = `${item.email}`
    trDom.appendChild(tdEmail)
 
 
@@ -247,10 +246,10 @@ function criandoTabela(referencia){
    btnEditar.onclick = ()=>{
 
           form.classList.toggle("aparecer")
-          inputHidden.value = referencia.email
-          input[0].value = referencia.nome
-          input[1].value = referencia.idade
-          input[2].value = referencia.email 
+          inputHidden.value = item.email
+          input[0].value = item.nome
+          input[1].value = item.idade
+          input[2].value = item.email 
   }
 
    let tdBtnExcluir = document.createElement("td")
@@ -264,7 +263,7 @@ function criandoTabela(referencia){
     btnExcluir.onclick = ()=>{
 
       for(let i=0; i < pegandoChave.length; i++){
-         if(pegandoChave[i].email == referencia.email){
+         if(pegandoChave[i].email == item.email){
           pegandoChave.splice(i, 1)
          }
       }
@@ -278,19 +277,19 @@ function criandoTabela(referencia){
 
 //EDITANDO VALORES DOS VALORES SALVOS===============================================
 function editando(){
-  pegandoChave.forEach(function(referencia){
+  pegandoChave.forEach(function(item){
 
-  if(referencia.nome == input[0].value &&  referencia.idade == input[1].value && referencia.email == input[2].value){
+  if(item.nome == input[0].value &&  item.idade == input[1].value && item.email == input[2].value){
     alert("Nenhuma Alteração feita")
     todosItensDoPegandoChave()
     inputFiltro.value = ""   
     form.classList.toggle("aparecer")
   
   }
-   else if(referencia.email == inputHidden.value){
-      referencia.nome = input[0].value
-      referencia.idade = input[1].value
-      referencia.email = input[2].value
+   else if(item.email == inputHidden.value){
+      item.nome = input[0].value
+      item.idade = input[1].value
+      item.email = input[2].value
       localStorage.setItem("chaveValores", JSON.stringify(pegandoChave))
       todosItensDoPegandoChave()
       inputFiltro.value = ""   
