@@ -167,12 +167,13 @@ function inserindoDadosNolocal(){
 
 let temNoLocal = false
 
-for(let i = 0; i < pegandoChave.length; i++){
-    if(pegandoChave[i].email == valores.email){
-        alert("Esse email já está salvo, coloque outro.") 
-        temNoLocal = true        
-    }
+pegandoChave.forEach(function(item){
+  if(item.email == valores.email){
+    alert("Esse email já está salvo, coloque outro.") 
+    temNoLocal = true        
 }
+})
+   
 
 if(!temNoLocal){
   pegandoChave.push(valores)
@@ -256,22 +257,19 @@ function criandoTabela(item,index){
    trDom.appendChild(tdBtnExcluir)
 
    let btnExcluir = document.createElement("button")
-    btnExcluir.innerHTML = `<i class="fa-solid fa-trash"></i>`
-    btnExcluir.classList.add("btnExcluir")
-    tdBtnExcluir.appendChild(btnExcluir) 
+   btnExcluir.innerHTML = `<i class="fa-solid fa-trash"></i>`
+   btnExcluir.classList.add("btnExcluir")
+   tdBtnExcluir.appendChild(btnExcluir) 
 
-    btnExcluir.onclick = ()=>{
+   btnExcluir.onclick = ()=>{
 
-      for(let i=0; i < pegandoChave.length; i++){
-         if(pegandoChave[i].email == item.email){
-          pegandoChave.splice(i, 1)
-         }
-      }
+      pegandoChave.splice(index, 1)
       localStorage.setItem("chaveValores", JSON.stringify(pegandoChave))
       todosItensDoPegandoChave()
       inputFiltro.value = ""
       alert("Excluido com sucesso")
-    }
+
+  }
 }
 //EXIBINDO VALORES DOS INPUTS=======================================================
 
