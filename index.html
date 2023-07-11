@@ -14,15 +14,14 @@
 </head>
 <body>
 
-    
-<main>
+ <main>
 <input type = "hidden" style="display: none;" class = "inputVazio"/>
     <button type = "submit" class = "btnAparecerModal">Clique para salvar suas infos</button>
 
 <table class="table custom-table" >
         <thead>
           <tr>
-
+            <th scope="col">Id</th>
             <th scope="col">Nome</th>
             <th scope="col">Idade</th>
             <th scope="col">Email</th>
@@ -47,13 +46,13 @@
 </div>
 
 <div class = "areaIdade areasInputs">
-<input type = "number" class = "input" placeholder = "Digite sua idade"  oninput="idadeVazio()"/>
+<input type="number" class = "input"  placeholder = "Digite sua idade"  oninput="idadeVazio()"/>
 <span class = "span">Preencha Este campo</span> 
 <span class = " span2"></span> 
 </div>
 
 <div class = "areaEmail areasInputs">
-<input type = "email" class = "input" placeholder = "Digite seu email" oninput="emailVazio()"/>
+<input type = "text" class = "input" placeholder = "Digite seu email" oninput="emailVazio()"/>
 <span class = "span">Email não valido</span> 
 <span class = "span2"></span> 
 </div>
@@ -68,6 +67,8 @@
 <span>FILTRAR:</span><input class = "inputFiltro" oninput = "filtro()" placeholder="Digite seu nome"/>
 
 </div>
+   
+
     
    
 
